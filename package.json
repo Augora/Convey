@@ -1,0 +1,17 @@
+{
+  "name": "convey",
+  "version": "1.0.0",
+  "description": "Static content for Augora",
+  "main": "index.js",
+  "repository": "https://github.com/Augora/Convey.git",
+  "author": "kevinbacas <bacas.kevin@hotmail.fr>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "now": "^17.0.4"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "deploy": "now"
+  }
+}
