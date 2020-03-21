@@ -1,6 +1,9 @@
-const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
+
+const axios = require("axios");
+const { from } = require("rxjs");
+const { mergeMap, toArray } = require("rxjs/operators");
 
 axios({
   url: "https://graphql.fauna.com/graphql",
@@ -11,7 +14,7 @@ axios({
   data: {
     query: `
       query {
-        Deputes {
+        Deputes(_size: 700) {
           data {
             Slug
             URLPhotoAssembleeNationnale
@@ -23,32 +26,38 @@ axios({
 })
   .then(result => {
     var deputes = result.data.data.Deputes.data;
-    return Promise.all(
-      deputes.map(d => {
-        const finalImagePath = path.resolve(
-          __dirname,
-          "depute",
-          `${d.Slug}.jpg`
-        );
-        console.log("finalImagePath:", finalImagePath);
-        return axios({
-          url: d.URLPhotoAssembleeNationnale,
-          method: "GET",
-          responseType: "stream"
-        }).then(response => {
-          response.data.pipe(fs.createWriteStream(finalImagePath));
-          return Promise.resolve((resolve, reject) => {
-            response.data.on("end", () => {
-              resolve();
-            });
+    return from(deputes)
+      .pipe(
+        mergeMap(d => {
+          const finalImagePath = path.resolve(
+            __dirname,
+            "public",
+            "depute",
+            `${d.Slug}.jpg`
+          );
+          console.log("finalImagePath:", finalImagePath);
+          return axios({
+            url: d.URLPhotoAssembleeNationnale,
+            method: "GET",
+            responseType: "stream"
+          }).then(response => {
+            response.data.pipe(fs.createWriteStream(finalImagePath));
+            return Promise.resolve((resolve, reject) => {
+              response.data.on("end", () => {
+                resolve();
+              });
 
-            response.data.on("error", error => {
-              reject(error);
+              response.data.on("error", error => {
+                console.error("error on:", finalImagePath);
+                console.error(error);
+                reject(error);
+              });
             });
           });
-        });
-      })
-    );
+        }, 1)
+      )
+      .pipe(toArray())
+      .toPromise();
   })
   .then(() => {
     console.log("Done.");
