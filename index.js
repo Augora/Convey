@@ -11,9 +11,7 @@ axios({
   url: "https://graphql.fauna.com/graphql",
   method: "POST",
   headers: {
-    Authorization: `Bearer ${
-      process.env.FAUNADB_TOKEN || "fnADpOpbETACAhiVb8T4CuVfbe-ivBpfhhmjCJFx"
-    }`,
+    Authorization: `Bearer ${process.env.FAUNADB_TOKEN}`,
   },
   data: {
     query: `
