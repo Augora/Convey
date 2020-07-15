@@ -56,15 +56,10 @@ axios({
                 });
               });
             })
-            .catch((err) => {
-              if (
-                err.response.status === 404 &&
-                err.response.statusText === "Not Found"
-              ) {
-                fs.createReadStream("placeholders/depute/placeholder.jpg").pipe(
-                  fs.createWriteStream(finalImagePath)
-                );
-              }
+            .catch((error) => {
+              fs.createReadStream("placeholders/depute/placeholder.jpg").pipe(
+                fs.createWriteStream(finalImagePath)
+              );
             });
         }, 10)
       )
