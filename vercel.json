@@ -1,3 +1,10 @@
 {
-  "scope": "augora"
+  "name": "Convey",
+  "scope": "augora",
+  "routes": [
+    {
+      "src": "/depute/(?<slug>[^/]*)",
+      "dest": "/depute/$slug.jpg"
+    }
+  ]
 }

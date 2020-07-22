@@ -1,8 +1,0 @@
-{
-  "routes": [
-    {
-      "src": "/depute/(?<slug>[^/]*)",
-      "dest": "/depute/$slug.jpg"
-    }
-  ]
-}
