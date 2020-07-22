@@ -1,0 +1,49 @@
+name: CI Pull Request
+
+on:
+  schedule:
+    - cron: "0 7 * * *"
+  repository_dispatch:
+    types: build-static-production
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # Virtual envs : https://help.github.com/en/articles/virtual-environments-for-github-actions
+        os: [ubuntu-latest]
+        node-version: [14.x]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Yarn cache directory
+        id: yarn-cache-dir
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Yarn cache
+        uses: actions/cache@v1
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir.outputs.dir }}
+          key: ${{ matrix.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ matrix.os }}-yarn-
+
+      - name: yarn install, build, and test
+        env:
+          CI: "true"
+          NODE_ENV: "pull_request"
+          GATSBY_TARGET_ENV: "pull_request"
+          FAUNADB_TOKEN: ${{ secrets.FAUNADB_TOKEN_STAGING }}
+          GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY: 20
+          GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: true
+        run: |
+          yarn install
+          yarn start
+          yarn deploy
