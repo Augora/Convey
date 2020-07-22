@@ -1,4 +1,4 @@
-name: CI Pull Request
+name: CI/CD Convey Production
 
 on:
   schedule:
@@ -48,4 +48,23 @@ jobs:
         env:
           ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
         with:
-          args: "npx now alias --token=$ZEIT_TOKEN --prod"
+          args: "npx now --token=$ZEIT_TOKEN --prod"
+
+      - uses: 8398a7/action-slack@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with:
+          status: custom
+          fields: workflow,job,commit
+          custom_payload: |
+            {
+              username: 'Github Actions',
+              icon_emoji: ':rocket:',
+              attachments: [
+                {
+                  color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+                  text: '${{ job.status }}' === 'success' ? `${process.env.AS_WORKFLOW} (${process.env.AS_COMMIT})\Convey deployment succeeded!` : `${process.env.AS_WORKFLOW} (${process.env.AS_COMMIT})\Convey deployment failed...`,
+                }
+              ]
+            }
