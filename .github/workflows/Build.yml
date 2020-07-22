@@ -38,12 +38,14 @@ jobs:
       - name: yarn install, build, and test
         env:
           CI: "true"
-          NODE_ENV: "pull_request"
-          GATSBY_TARGET_ENV: "pull_request"
-          FAUNADB_TOKEN: ${{ secrets.FAUNADB_TOKEN_STAGING }}
-          GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY: 20
-          GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: true
+          FAUNADB_TOKEN: ${{ secrets.FAUNADB_TOKEN }}
         run: |
           yarn install
           yarn start
-          yarn deploy
+
+      - name: deploy
+        uses: mikeal/npx@master
+        env:
+          ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+        with:
+          args: "npx now alias --token=$ZEIT_TOKEN --prod"
