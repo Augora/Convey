@@ -109,3 +109,6 @@ tmp/
 
 # public folder
 public/
+
+# Vercel folder
+.vercel
