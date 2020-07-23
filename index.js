@@ -69,4 +69,5 @@ axios({
   .then(() => {
     CompressImages();
     console.log("Done.");
-  });
+  })
+  .catch((e) => console.error("Error:", e));
