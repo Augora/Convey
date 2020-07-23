@@ -27,7 +27,9 @@ axios({
   },
 })
   .then((result) => {
+    console.log("result:", result.data);
     var deputes = result.data.data.Deputes.data;
+    console.log("deputes:", deputes);
     return from(deputes)
       .pipe(
         mergeMap((d) => {
