@@ -11,7 +11,7 @@
     "gifsicle": "^5.1.0",
     "now": "^19.2.0",
     "pngquant-bin": "^6.0.0",
-    "rxjs": "^6.6.0"
+    "rxjs": "^6.6.2"
   },
   "scripts": {
     "start": "node index.js",
