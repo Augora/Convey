@@ -18,6 +18,6 @@
     "deploy": "now --prod"
   },
   "devDependencies": {
-    "compress-images": "^1.9.2"
+    "compress-images": "^1.9.3"
   }
 }
