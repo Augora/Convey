@@ -764,10 +764,10 @@ commander@~2.8.1:
   dependencies:
     graceful-readlink ">= 1.0.0"
 
-compress-images@^1.9.2:
-  version "1.9.2"
-  resolved "https://registry.yarnpkg.com/compress-images/-/compress-images-1.9.2.tgz#5d349dce2cce9928204ba0a7d690d52fcf7d035c"
-  integrity sha512-zESieaGhpX6OiRSAFHljOjvvuVwuLUzpWQ4HB3sgyi1Tq3rGsqmVbGi3ioU9jKs96TdEupfvVy0qrzEvHzzEOQ==
+compress-images@^1.9.4:
+  version "1.9.4"
+  resolved "https://registry.yarnpkg.com/compress-images/-/compress-images-1.9.4.tgz#284b5e97ef1d2b8d3a010bafa8fcdabd1f190ddf"
+  integrity sha512-D5xs10V8EnB4WS1yzA/G4NOD4AXJyGdT6cGZ2DsfN2OU5wpCC7sk0OBieh2qIRBYNYvYERn8Ukiq6wCz1gxhwQ==
   dependencies:
     bytes "^3.1.0"
     color "^3.1.2"
