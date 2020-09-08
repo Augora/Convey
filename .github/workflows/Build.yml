@@ -2,7 +2,7 @@ name: CI/CD Convey Production
 
 on:
   schedule:
-    - cron: "0 7 * * *"
+    - cron: "0 6 * * *"
   repository_dispatch:
     types: build-static-production
 
