@@ -112,3 +112,6 @@ public/
 
 # Vercel folder
 .vercel
+
+# logs
+log/

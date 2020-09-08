@@ -59,8 +59,10 @@ axios({
               });
             })
             .catch((error) => {
-              fs.createReadStream("placeholders/depute/placeholder.jpg").pipe(
-                fs.createWriteStream(finalImagePath)
+              console.error(
+                `${d.Slug}:`,
+                error.response.status,
+                error.response.statusText
               );
             });
         }, 10)
