@@ -7,7 +7,7 @@
   "author": "kevinbacas <bacas.kevin@hotmail.fr>",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.20.0",
     "gifsicle": "^5.1.0",
     "vercel": "^19.2.0",
     "pngquant-bin": "^6.0.0",
