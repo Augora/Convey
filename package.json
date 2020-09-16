@@ -19,6 +19,6 @@
     "deploy": "vercel --prod"
   },
   "devDependencies": {
-    "compress-images": "^1.9.2"
+    "compress-images": "^1.9.5"
   }
 }
