@@ -43,14 +43,16 @@ jobs:
           yarn install
           yarn start
 
-      - name: deploy
-        uses: mikeal/npx@master
-        env:
-          VERCEL_ORG_ID: ${{ secrets.ZEIT_ORGID_AUGORA }}
-          VERCEL_PROJECT_ID: ${{ secrets.ZEIT_PROJECTID_CONVEY }}
-          ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+      - uses: amondnet/vercel-action@v19
         with:
-          args: "npx now --token=$ZEIT_TOKEN --prod"
+          vercel-token: ${{ secrets.ZEIT_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-comment: false
+          vercel-org-id: ${{ secrets.ZEIT_ORGID_AUGORA }}
+          vercel-project-id: ${{ secrets.ZEIT_PROJECTID_CONVEY }}
+          scope: augora
+          alias-domains: |
+            static.augora.fr
 
       - uses: 8398a7/action-slack@v3
         env:
