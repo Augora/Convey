@@ -61,7 +61,6 @@ axios({
               });
             })
             .catch((error) => {
-              process.exitCode = 1;
               console.error(
                 `${d.Slug}:`,
                 error.response.status,
