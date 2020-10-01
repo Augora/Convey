@@ -6,6 +6,7 @@ const { from } = require("rxjs");
 const { mergeMap, toArray } = require("rxjs/operators");
 
 const { CompressImages } = require("./Utils/Compression");
+const { exit } = require("process");
 
 axios({
   url: "https://graphql.fauna.com/graphql",
@@ -52,6 +53,7 @@ axios({
                   resolve();
                 });
                 response.data.on("error", (error) => {
+                  process.exitCode = 1;
                   console.error("error on:", finalImagePath);
                   console.error(error);
                   reject(error);
@@ -59,6 +61,7 @@ axios({
               });
             })
             .catch((error) => {
+              process.exitCode = 1;
               console.error(
                 `${d.Slug}:`,
                 error.response.status,
@@ -74,4 +77,7 @@ axios({
     CompressImages();
     console.log("Done.");
   })
-  .catch((e) => console.error("Error:", e));
+  .catch((e) => {
+    process.exitCode = 1;
+    console.error("Error:", e);
+  });
