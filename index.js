@@ -28,7 +28,7 @@ axios({
 })
   .then((result) => {
     console.log("result:", result.data);
-    var deputes = result.data.data.Deputes.data;
+    var deputes = result.data.data.Deputes.data.filter((d) => d !== null);
     console.log("deputes:", deputes);
     return from(deputes)
       .pipe(
