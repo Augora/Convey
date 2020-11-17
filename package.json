@@ -8,8 +8,8 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.20.0",
-    "gifsicle": "^5.1.0",
-    "pngquant-bin": "^6.0.0",
+    "imagemin": "^7.0.1",
+    "imagemin-mozjpeg": "^9.0.0",
     "rxjs": "^6.6.3",
     "vercel": "^20.1.0"
   },
@@ -17,8 +17,5 @@
     "start": "node index.js",
     "dev": "vercel dev",
     "deploy": "vercel --prod"
-  },
-  "devDependencies": {
-    "compress-images": "^1.9.5"
   }
 }

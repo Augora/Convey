@@ -4,9 +4,8 @@ const path = require("path");
 const axios = require("axios");
 const { from } = require("rxjs");
 const { mergeMap, toArray } = require("rxjs/operators");
-
-const { CompressImages } = require("./Utils/Compression");
-const { exit } = require("process");
+const imagemin = require("imagemin");
+const imageminMozjpeg = require("imagemin-mozjpeg");
 
 axios({
   url: "https://graphql.fauna.com/graphql",
@@ -28,9 +27,7 @@ axios({
   },
 })
   .then((result) => {
-    console.log("result:", result.data);
     var deputes = result.data.data.Deputes.data.filter((d) => d !== null);
-    console.log("deputes:", deputes);
     return from(deputes)
       .pipe(
         mergeMap((d) => {
@@ -73,8 +70,18 @@ axios({
       .toPromise();
   })
   .then(() => {
-    CompressImages();
-    console.log("Done.");
+    return imagemin(["tmp/depute/*.jpg"], {
+      destination: "public/depute",
+      plugins: [
+        imageminMozjpeg({
+          quality: 60,
+          progressive: true,
+        }),
+      ],
+    });
+  })
+  .then((d) => {
+    console.log(`${d.length} images optimized.`);
   })
   .catch((e) => {
     process.exitCode = 1;
