@@ -74,8 +74,7 @@ axios({
       destination: "public/depute",
       plugins: [
         imageminMozjpeg({
-          quality: 80,
-          progressive: true,
+          quality: 90,
         }),
       ],
     });
