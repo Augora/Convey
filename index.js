@@ -19,7 +19,7 @@ axios({
         Deputes(_size: 700) {
           data {
             Slug
-            URLPhotoAssembleeNationnale
+            URLPhotoAssembleeNationale
           }
         }
       }
