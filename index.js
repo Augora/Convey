@@ -38,7 +38,7 @@ axios({
             `${d.Slug}.jpg`
           );
           return axios({
-            url: d.URLPhotoAssembleeNationnale,
+            url: d.URLPhotoAssembleeNationale,
             method: "GET",
             responseType: "stream",
           })
