@@ -1,5 +1,5 @@
 # dependencies
-/node_modules
+node_modules/
 
 # Gatsby cache
 .cache
@@ -7,3 +7,5 @@
 # Src files
 .github/
 src/
+tmp/
+log/
