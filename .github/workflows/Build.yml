@@ -71,7 +71,7 @@ jobs:
               icon_emoji: ':rocket:',
               attachments: [
                 {
-                  color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+                  color: '${{ job.status }}' === 'success' ? '#28a745' : '${{ job.status }}' === 'failure' ? '#dc3545' : '#ffc107',
                   "blocks": [
                     {
                       "type": "section",
