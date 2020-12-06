@@ -7,11 +7,11 @@
   "author": "kevinbacas <bacas.kevin@hotmail.fr>",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.20.0",
+    "axios": "^0.21.0",
     "imagemin": "^7.0.1",
     "imagemin-mozjpeg": "^9.0.0",
     "rxjs": "^6.6.3",
-    "vercel": "^20.1.0"
+    "vercel": "^21.0.1"
   },
   "scripts": {
     "start": "node index.js",
