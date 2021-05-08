@@ -77,7 +77,7 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": '${{ job.status }}' === 'success' ? "Convey deployment succeeded!" : "Convey deployment failed..."
+                        "text": '${{ job.status }}' === 'success' ? "Deployment succeeded!" : "Deployment failed..."
                       }
                     }
                   ]
