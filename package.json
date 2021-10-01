@@ -7,7 +7,7 @@
   "author": "kevinbacas <bacas.kevin@hotmail.fr>",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.22.0",
     "imagemin": "^7.0.1",
     "imagemin-mozjpeg": "^9.0.0",
     "rxjs": "^6.6.3",
