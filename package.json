@@ -7,7 +7,9 @@
   "author": "kevinbacas <bacas.kevin@hotmail.fr>",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.21.0",
+    "@supabase/supabase-js": "^1.30.0",
+    "axios": "^0.25.0",
+    "dotenv": "^16.0.0",
     "imagemin": "^7.0.1",
     "imagemin-mozjpeg": "^9.0.0",
     "rxjs": "^6.6.3",

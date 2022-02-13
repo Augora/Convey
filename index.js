@@ -1,33 +1,19 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 const fs = require("fs");
 const path = require("path");
-
-const axios = require("axios");
 const { from } = require("rxjs");
 const { mergeMap, toArray } = require("rxjs/operators");
 const imagemin = require("imagemin");
 const imageminMozjpeg = require("imagemin-mozjpeg");
+const axios = require("axios");
 
-axios({
-  url: "https://graphql.fauna.com/graphql",
-  method: "POST",
-  headers: {
-    Authorization: `Bearer ${process.env.FAUNADB_TOKEN}`,
-  },
-  data: {
-    query: `
-      query {
-        Deputes(_size: 700) {
-          data {
-            Slug
-            URLPhotoAssembleeNationale
-          }
-        }
-      }
-    `,
-  },
-})
+const { GetDeputesFromSupabase } = require("./Common/SupabaseClient");
+
+GetDeputesFromSupabase()
   .then((result) => {
-    var deputes = result.data.data.Deputes.data.filter((d) => d !== null);
+    var deputes = result.filter((d) => d !== null);
     return from(deputes)
       .pipe(
         mergeMap((d) => {
