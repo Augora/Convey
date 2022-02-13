@@ -41,7 +41,8 @@ jobs:
       - name: yarn install, build, and test
         env:
           CI: "true"
-          FAUNADB_TOKEN: ${{ secrets.FAUNADB_TOKEN_READONLY_PRODUCTION }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL_PRODUCTION }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY_PRODUCTION }}
         run: |
           yarn install
           yarn start
