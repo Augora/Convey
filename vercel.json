@@ -1,5 +1,4 @@
 {
-  "scope": "augora",
   "routes": [
     {
       "src": "/depute/(?<slug>[^/]*)",
