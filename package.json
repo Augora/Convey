@@ -17,7 +17,7 @@
     "vercel": "^21.0.1"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "ts-node index.ts",
     "dev": "vercel dev",
     "deploy": "vercel --prod"
   }
