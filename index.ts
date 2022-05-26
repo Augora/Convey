@@ -1,19 +1,22 @@
-const dotenv = require("dotenv");
+import dotenv from "dotenv";
 dotenv.config();
 
-const fs = require("fs");
-const path = require("path");
-const { from } = require("rxjs");
-const { mergeMap, toArray } = require("rxjs/operators");
-const imagemin = require("imagemin");
-const imageminMozjpeg = require("imagemin-mozjpeg");
-const axios = require("axios");
+import fs from "fs";
+import path from "path";
+import { from } from "rxjs";
+import { mergeMap, toArray } from "rxjs/operators";
+import imagemin from "imagemin";
+import imageminMozjpeg from "imagemin-mozjpeg";
+import axios from "axios";
 
-const { GetDeputesFromSupabase } = require("./Common/SupabaseClient");
+import {
+  GetDeputesFromSupabase,
+  supabaseClient,
+} from "./Common/SupabaseClient";
 
 GetDeputesFromSupabase()
   .then((result) => {
-    var deputes = result.filter((d) => d !== null);
+    var deputes: Types.Canonical.Depute[] = result.filter((d) => d !== null);
     return from(deputes)
       .pipe(
         mergeMap((d) => {
@@ -68,7 +71,25 @@ GetDeputesFromSupabase()
   .then((d) => {
     console.log(`${d.length} images optimized.`);
   })
-  .catch((e) => {
-    process.exitCode = 1;
-    console.error("Error:", e);
+  .then((d) => {
+    fs.readdir("./public/depute", (err, files) => {
+      files.forEach((file) => {
+        fs.readFile(
+          path.resolve("./public/depute", file),
+          (err, fileContent) => {
+            supabaseClient.storage
+              .from("deputes")
+              .upload(file, fileContent, {
+                cacheControl: "3600",
+                upsert: true,
+                contentType: "image/jpg",
+              })
+              .then((d) => {
+                console.log("success", d);
+              })
+              .catch((e) => console.error("error", e));
+          }
+        );
+      });
+    });
   });

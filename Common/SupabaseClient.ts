@@ -1,6 +1,6 @@
-const { createClient } = require("@supabase/supabase-js");
+import { createClient } from "@supabase/supabase-js";
 
-const supabaseClient = createClient(
+export const supabaseClient = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_KEY
 );
@@ -12,15 +12,10 @@ function handleSupabaseError({ error, ...rest }) {
   return rest;
 }
 
-function GetDeputesFromSupabase() {
+export function GetDeputesFromSupabase() {
   return supabaseClient
-    .from("Depute")
+    .from<Types.Canonical.Depute>("Depute")
     .select()
     .then(handleSupabaseError)
     .then((d) => d.body);
 }
-
-module.exports = {
-  GetDeputesFromSupabase,
-  supabaseClient,
-};
