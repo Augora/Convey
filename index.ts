@@ -12,6 +12,14 @@ import {
   supabaseClient,
 } from "./Common/SupabaseClient";
 
+// Folder checks
+if (!fs.existsSync(path.resolve(__dirname, "public"))) {
+  fs.mkdirSync(path.resolve(__dirname, "public"));
+}
+if (!fs.existsSync(path.resolve(__dirname, "public", "depute"))) {
+  fs.mkdirSync(path.resolve(__dirname, "public", "depute"));
+}
+
 GetDeputesFromSupabase()
   .then((result) => {
     var deputes: Types.Canonical.Depute[] = result.filter((d) => d !== null);
