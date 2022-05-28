@@ -57,7 +57,7 @@ GetDeputesFromSupabase()
       .toPromise();
   })
   .then((d) => {
-    fs.readdir("./public/depute", (err, files) => {
+    fs.readdir(path.resolve(__dirname, "public", "depute"), (err, files) => {
       if (err) {
         console.error("error reading folder:", err);
       }
@@ -65,7 +65,7 @@ GetDeputesFromSupabase()
         .pipe(
           mergeMap((file) => {
             const fileContent = fs.readFileSync(
-              path.resolve("./public/depute", file)
+              path.resolve(__dirname, "public", "depute", file)
             );
             return supabaseClient.storage
               .from("deputes")
