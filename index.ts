@@ -5,8 +5,6 @@ import fs from "fs";
 import path from "path";
 import { from } from "rxjs";
 import { mergeMap, toArray } from "rxjs/operators";
-import imagemin from "imagemin";
-import imageminMozjpeg from "imagemin-mozjpeg";
 import axios from "axios";
 
 import {
@@ -22,7 +20,7 @@ GetDeputesFromSupabase()
         mergeMap((d) => {
           const finalImagePath = path.resolve(
             __dirname,
-            "tmp",
+            "public",
             "depute",
             `${d.Slug}.jpg`
           );
@@ -58,26 +56,18 @@ GetDeputesFromSupabase()
       .pipe(toArray())
       .toPromise();
   })
-  .then(() => {
-    return imagemin(["tmp/depute/*.jpg"], {
-      destination: "public/depute",
-      plugins: [
-        imageminMozjpeg({
-          quality: 90,
-        }),
-      ],
-    });
-  })
-  .then((d) => {
-    console.log(`${d.length} images optimized.`);
-  })
   .then((d) => {
     fs.readdir("./public/depute", (err, files) => {
-      files.forEach((file) => {
-        fs.readFile(
-          path.resolve("./public/depute", file),
-          (err, fileContent) => {
-            supabaseClient.storage
+      if (err) {
+        console.error("error reading folder:", err);
+      }
+      return from(files)
+        .pipe(
+          mergeMap((file) => {
+            const fileContent = fs.readFileSync(
+              path.resolve("./public/depute", file)
+            );
+            return supabaseClient.storage
               .from("deputes")
               .upload(file, fileContent, {
                 cacheControl: "3600",
@@ -85,11 +75,13 @@ GetDeputesFromSupabase()
                 contentType: "image/jpg",
               })
               .then((d) => {
-                console.log("success", d);
-              })
-              .catch((e) => console.error("error", e));
-          }
-        );
-      });
+                if (d.error) {
+                  console.error("Error uploading file to supabase:", d.error);
+                }
+              });
+          }, 10)
+        )
+        .pipe(toArray())
+        .toPromise();
     });
   });
