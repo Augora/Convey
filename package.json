@@ -9,7 +9,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^1.35.3",
     "axios": "^0.25.0",
-    "dotenv": "^16.0.0",
+    "dotenv": "^16.0.1",
     "rxjs": "^6.6.3",
     "ts-node": "^10.8.0",
     "vercel": "^21.0.1"
